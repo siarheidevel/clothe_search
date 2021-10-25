@@ -72,6 +72,7 @@ class DeepFashionClothingDataset(Dataset):
                 # T.RandomApply(transforms=[T.RandomCrop(size=self.out_size)], p=0.5),
                 # T.RandomAdjustSharpness(sharpness_factor=2, p=0.5),
                 T.RandomHorizontalFlip(p=0.5),
+                T.RandomGrayscale(p=0.2),
                 T.RandomApply(transforms=[T.ColorJitter(brightness=0.4, contrast=0.4, saturation=0.1, hue=0.1)], p=0.7),
                 T.RandomApply(transforms=[FreeFormMask(nodes=4)], p=0.5),
                 T.RandomApply(transforms=[T.GaussianBlur(kernel_size=(1, 5), sigma=(0.1, 3))], p=0.5),

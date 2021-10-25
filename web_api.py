@@ -2,9 +2,11 @@ from typing import Optional, List
 from enum import Enum
 import time
 import uvicorn
-from fastapi import FastAPI, Query, Path, Cookie, Header, File, UploadFile, Depends, Request
+from fastapi import FastAPI, Query, Path, Cookie, Header, File, UploadFile, Depends, Request, Response
 from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel, Field
+
+from PIL import Image
 
 import sys,os
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
@@ -86,7 +88,7 @@ async def create_file(file: bytes = File(...)):
 @app.post("/uploadfile/", tags=["files"])
 async def create_upload_file(file: UploadFile = File(...)):
     # contents = await file.read()
-    from PIL import Image
+    
     # import io
     # img = Image.open(io.BytesIO(contents))
     img = Image.open(file.file)
@@ -100,6 +102,16 @@ async def add_process_time_header(request: Request, call_next):
     response.headers["X-Process-Time"] = str(process_time)
     return response
 
+
+@app.post("/predict/segment")
+def predict(file: UploadFile = File(...)):
+    file_bytes = file.file.read()
+    image = Image.open(io.BytesIO(file_bytes))
+    new_image = prepare_image(image)
+    result = predict(image)
+    bytes_image = io.BytesIO()
+    new_image.save(bytes_image, format='PNG')
+    return Response(content = bytes_image.getvalue(), headers = result, media_type="image/png")
 
 if __name__ == "__main__":
     uvicorn.run('web_api:app', host="0.0.0.0", port=8000, reload=True)
