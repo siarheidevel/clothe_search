@@ -26,7 +26,7 @@ data_pairs =pd.read_csv(dataset_path/'annotation_pairs.csv', sep=';')
 print(data.shape, data_pairs.shape)
 data.head(5)
 
-
+ 
 # %%
 #catgories
 seg_labels = {'background': 0, 'hat':1, 'hair': 2,  'face': 3, 'upper-clothes':4,
