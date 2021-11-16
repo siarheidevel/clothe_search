@@ -1,3 +1,5 @@
 **/__pycache__
 **/lightning_logs
 **/checkpoints
+util/*.csv
+util/customfashion_index_qanet_processed.csv

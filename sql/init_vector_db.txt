@@ -1,0 +1,18 @@
+#build docker image
+docker build . -t pgvector_14:0.2
+
+# run docker image
+docker run --name pgvector -p 5433:5432 -e POSTGRES_PASSWORD=111111 -d pgvector_14:0.2 
+
+#stopping container
+
+https://stackoverflow.com/questions/37971961/docker-error-bind-address-already-in-use
+sudo lsof -i -P -n | grep <port number>  # List who's using the port
+sudo kill <process id>
+
+https://javahowtos.com/guides/124-docker/414-solved-cannot-kill-docker-container-permission-denied.html
+
+
+docker volume create pgvector_garment_data
+docker run -d --name pgvector2 -p 5433:5432 -e POSTGRES_PASSWORD=111111 -v pgvector_garment_data:/var/lib/postgresql/data pgvector_14:0.2 
+
