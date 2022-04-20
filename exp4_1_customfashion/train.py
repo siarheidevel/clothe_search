@@ -126,10 +126,11 @@ def run_model(args):
         temperature=True)
 
     trainer = pl.Trainer.from_argparse_args(args,
-        resume_from_checkpoint='/home/deeplab/devel/Clothes_search/exp4_1_customfashion/checkpoints/dense121_category/epoch=1-step=29999.ckpt',
+        # resume_from_checkpoint='/home/deeplab/devel/Clothes_search/exp4_1_customfashion/checkpoints/dense121_category/epoch=1-step=29999.ckpt',
+        resume_from_checkpoint=args.save_dir+'/last.ckpt',
         # track_grad_norm=2,weights_summary="full",
         callbacks=[lr_monitor, every_10000_steps_checkpoint,last_checkpoint,every_10_epoch_checkpoint],
-        # resume_from_checkpoint=args.save_dir+'/last.ckpt',
+        
         # fast_dev_run=1,
         gpus = [CUDA_DEVICE_ID],
         max_epochs=args.epochs,
