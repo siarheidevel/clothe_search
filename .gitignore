@@ -3,3 +3,5 @@
 **/checkpoints
 util/*.csv
 util/customfashion_index_qanet_processed.csv
+
+**/nohup.out
